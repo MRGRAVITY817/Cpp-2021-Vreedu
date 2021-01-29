@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 
+// Preprocessor
 #define LIST_SIZE 5
 
 using namespace std;
@@ -8,7 +9,9 @@ using namespace std;
 void createEmail(string* emailList, int index);
 void createPassword(string* passwordList, int index);
 void createCredentials(int count, string* emailList, string* passwordList);
+
 void printCredentials(string* emailList, string* passwordList);
+
 bool isEmailOk(string email, string* emailList);
 bool isPasswordOk(string password, string* passwordList);
 void login(string* emailList, string* passwordList);
@@ -75,12 +78,12 @@ void createPassword(string* passwordList, int index){
 }
 
 void createCredentials(int count, string* emailList, string* passwordList){
-  if(count > LIST_SIZE-1){
+  if(count > LIST_SIZE){
     cout << "List is Full!" << endl;
   }
   else {
-    createEmail(emailList, count);
-    createPassword(passwordList, count);
+    createEmail(emailList, count-1);
+    createPassword(passwordList, count-1);
     cout << "User info saved!" << endl;
   }
   return;
