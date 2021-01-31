@@ -23,14 +23,19 @@ class Client {
     }
     // Destructor: is function which is exectuted when class object is deleted
     ~Client(){
-      cout << "Client deleted" << endl;
+      cout << "Client "<< this->email <<" deleted" << endl;
     }
 };
 
 class Admin {
-  private: 
-
   public:
+    string email;
+    Admin(string email){
+      this->email = email;
+    }
+    ~Admin(){
+      cout << "Thanks for using our program. If any problems, send email to " << this->email << "." << endl;
+    }
     void printCredentials(Client* clientList[], int count){
       cout << "============== Clients ==============" << endl;
       for(int i=0; i<count; i++){
@@ -41,13 +46,13 @@ class Admin {
       }
       return;
     }
-    void login(Client* clientList[]){
+    void login(Client* clientList[], int count){
       string email, password;
       cout << "Type email: ";
       getline(cin, email);
       cout << "Type password: ";
       getline(cin, password);
-      for(int i=0; i<LIST_SIZE; i++){
+      for(int i=0; i<count; i++){
         if(clientList[i]->email == email && clientList[i]->password == password){
           cout << "Login succeeded" << endl;
           return;
@@ -56,11 +61,11 @@ class Admin {
       cout << "Login Failed" << endl;
       return;
     }
-    void findCredentials(Client* clientList[]){
+    void findCredentials(Client* clientList[], int count){
       string food;
       cout << "Type your favorite food: ";
       getline(cin, food);
-      for(int i=0; i<LIST_SIZE; i++){
+      for(int i=0; i<count; i++){
         if(clientList[i]->favoriteFood == food){
           cout << "Your Email:    " << clientList[i]->email << endl;
           cout << "Your Password: " << clientList[i]->password << endl;
@@ -74,7 +79,7 @@ class Admin {
 
 int main() {
   Client* clientList[LIST_SIZE];
-  Admin* admin = new Admin();
+  Admin* admin = new Admin("mrgravity817@gmail.com");
   char selectKey;
   bool running = true;
   int count = 0;
@@ -82,7 +87,7 @@ int main() {
     //system("clear");
     // 1.5. Print all the Emails and Passwords
     admin->printCredentials(clientList, count);
-    cout << "============ Select ==============" << endl
+    cout << "============== Select ===============" << endl
          << " a. Create Email and Password" << endl
          << " b. Log In" << endl
          << " c. Find Email/Password" << endl
@@ -99,11 +104,11 @@ int main() {
         break;
       case 'b': 
         // 3. Perform Login
-        admin->login(clientList);
+        admin->login(clientList, count);
         break;
       case 'c':
         // 4. Find credentials
-        admin->findCredentials(clientList);
+        admin->findCredentials(clientList, count);
         break;
       case 'q':
         // 5. Turn off the program
@@ -112,6 +117,10 @@ int main() {
       default: 
         break;
     }
+  }
+
+  for(int i=0; i<count; i++){
+    delete clientList[i];
   }
   delete admin;
   return 0;
