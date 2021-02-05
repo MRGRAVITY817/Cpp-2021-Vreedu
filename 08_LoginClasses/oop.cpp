@@ -5,85 +5,101 @@
 
 using namespace std;
 
-class Client {
-  public:
-    // Properties: are variables in class object
-    string email;
-    string password; 
-    string favoriteFood;
-    // Methods: are functions in class object
-    // Constructor: is function which is executed when class object is created
-    Client(){
-      cout << "Enter email: ";
-      getline(cin, this->email);
-      cout << "Enter password: ";
-      getline(cin, this->password);
-      cout << "Enter favorite food: ";
-      getline(cin, this->favoriteFood);
-    }
-    // Destructor: is function which is exectuted when class object is deleted
-    ~Client(){
-      cout << "Client "<< this->email <<" deleted" << endl;
-    }
+class Client
+{
+public:
+  // Properties: are variables in class object
+  string email;
+  string password;
+  string favoriteFood;
+  // Methods: are functions in class object
+  // Constructor: is function which is executed when class object is created
+  Client()
+  {
+    cout << "Enter email: ";
+    getline(cin, this->email);
+    cout << "Enter password: ";
+    getline(cin, this->password);
+    cout << "Enter favorite food: ";
+    getline(cin, this->favoriteFood);
+  }
+  // Destructor: is function which is exectuted when class object is deleted
+  ~Client()
+  {
+    cout << "Client " << this->email << " deleted" << endl;
+  }
 };
 
-class Admin {
-  public:
-    string email;
-    Admin(string email){
-      this->email = email;
+class Admin
+{
+public:
+  string email;
+  Admin(string email)
+  {
+    this->email = email;
+  }
+  ~Admin()
+  {
+    cout << "Thanks for using our program. If any problems, send email to " << this->email << "." << endl;
+  }
+  void printCredentials(Client *clientList[], int count)
+  {
+    cout << "============== Clients ==============" << endl;
+    for (int i = 0; i < count; i++)
+    {
+      cout << "Email:     " << clientList[i]->email << endl
+           << "Password:  " << clientList[i]->password << endl
+           << "Food:      " << clientList[i]->favoriteFood << endl
+           << "=====================================" << endl;
     }
-    ~Admin(){
-      cout << "Thanks for using our program. If any problems, send email to " << this->email << "." << endl;
-    }
-    void printCredentials(Client* clientList[], int count){
-      cout << "============== Clients ==============" << endl;
-      for(int i=0; i<count; i++){
-        cout << "Email:     " << clientList[i]->email << endl
-             << "Password:  " << clientList[i]->password << endl
-             << "Food:      " << clientList[i]->favoriteFood << endl
-             << "=====================================" << endl;
+    return;
+  }
+  void login(Client *clientList[], int count)
+  {
+    string email, password;
+    cout << "Type email: ";
+    getline(cin, email);
+    cout << "Type password: ";
+    getline(cin, password);
+    for (int i = 0; i < count; i++)
+    {
+      if (clientList[i]->email == email && clientList[i]->password == password)
+      {
+        cout << "Login succeeded" << endl;
+        return;
       }
-      return;
     }
-    void login(Client* clientList[], int count){
-      string email, password;
-      cout << "Type email: ";
-      getline(cin, email);
-      cout << "Type password: ";
-      getline(cin, password);
-      for(int i=0; i<count; i++){
-        if(clientList[i]->email == email && clientList[i]->password == password){
-          cout << "Login succeeded" << endl;
-          return;
-        }
+    cout << "Login Failed" << endl;
+    return;
+  }
+  void findCredentials(Client *clientList[], int count)
+  {
+    string food;
+    cout << "Type your favorite food: ";
+    getline(cin, food);
+    for (int i = 0; i < count; i++)
+    {
+      if (clientList[i]->favoriteFood == food)
+      {
+        cout << "Your Email:    " << clientList[i]->email << endl;
+        cout << "Your Password: " << clientList[i]->password << endl;
+        return;
       }
-      cout << "Login Failed" << endl;
-      return;
     }
-    void findCredentials(Client* clientList[], int count){
-      string food;
-      cout << "Type your favorite food: ";
-      getline(cin, food);
-      for(int i=0; i<count; i++){
-        if(clientList[i]->favoriteFood == food){
-          cout << "Your Email:    " << clientList[i]->email << endl;
-          cout << "Your Password: " << clientList[i]->password << endl;
-          return;
-        }
-      }
-      cout << "Given food doesn't exist." << endl;
-      return;
-    }
+    cout << "Given food doesn't exist." << endl;
+    return;
+  }
 };
 
-int main() {
-  Client* clientList[LIST_SIZE];
-  Admin* admin = new Admin("mrgravity817@gmail.com");
+int main()
+{
+  Client *clientList[LIST_SIZE];
+  Admin *admin = new Admin("mrgravity817@gmail.com");
   char selectKey;
   bool running = true;
   int count = 0;
-  while(running){
+  while (running)
+  {
     //system("clear");
     // 1.5. Print all the Emails and Passwords
     admin->printCredentials(clientList, count);
@@ -96,30 +112,32 @@ int main() {
     cin >> selectKey;
     cin.ignore();
 
-    switch(selectKey){
-      case 'a': 
-        // 2. Create Email and Password and Food
-        clientList[count] = new Client();
-        count++;
-        break;
-      case 'b': 
-        // 3. Perform Login
-        admin->login(clientList, count);
-        break;
-      case 'c':
-        // 4. Find credentials
-        admin->findCredentials(clientList, count);
-        break;
-      case 'q':
-        // 5. Turn off the program
-        running = false;
-        break;
-      default: 
-        break;
+    switch (selectKey)
+    {
+    case 'a':
+      // 2. Create Email and Password and Food
+      clientList[count] = new Client();
+      count++;
+      break;
+    case 'b':
+      // 3. Perform Login
+      admin->login(clientList, count);
+      break;
+    case 'c':
+      // 4. Find credentials
+      admin->findCredentials(clientList, count);
+      break;
+    case 'q':
+      // 5. Turn off the program
+      running = false;
+      break;
+    default:
+      break;
     }
   }
 
-  for(int i=0; i<count; i++){
+  for (int i = 0; i < count; i++)
+  {
     delete clientList[i];
   }
   delete admin;
