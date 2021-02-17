@@ -25,7 +25,6 @@ public:
 
   ~Fruit()
   {
-    cout << "꾸에에에엑" << endl;
   }
 
   void eat()
@@ -45,7 +44,9 @@ public:
     this->weight = 129.1;
     this->vitamin = 133;
   }
-  ~Apple()
+  ~Apple(){};
+
+  void eat()
   {
     cout << "아삭아삭" << endl;
   }
@@ -62,7 +63,8 @@ public:
     this->weight = 129.1;
     this->vitamin = 133;
   }
-  ~Orange()
+  ~Orange(){};
+  void eat()
   {
     cout << "제주제주" << endl;
   }
@@ -71,20 +73,13 @@ public:
 int main()
 {
   Apple *apple = new Apple();
+  // Apple apple;
+  // apple.sweetness
   Orange *orange = new Orange();
+  Fruit *fruit = new Fruit();
 
-  // Apple
-  cout << apple->sweetness << endl;
-  cout << apple->color << endl;
-  cout << apple->isSeed << endl;
-  cout << apple->weight << endl;
-  cout << apple->vitamin << endl;
-  // Orange
-  cout << orange->sweetness << endl;
-  cout << orange->color << endl;
-  cout << orange->isSeed << endl;
-  cout << orange->weight << endl;
-  cout << orange->vitamin << endl;
+  apple->eat();
+  orange->eat();
 
   delete apple;
   delete orange;
